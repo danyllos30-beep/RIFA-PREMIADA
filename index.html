@@ -3,25 +3,456 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rifa Premiada — Concorra Já</title>
+  <title>Rifa Premiada — iPhone 14 Pro Max lacrado</title>
+  <meta name="description" content="Concorra a um iPhone 14 Pro Max lacrado. Escolha seus números, pague por Pix e participe com transparência.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111823;
+      --muted:#97a3b6;
+      --text:#ecf2ff;
+      --primary:#27d07d;
+      --accent:#f7c948;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:linear-gradient(180deg,#0b0f14 0%,#0d1320 100%);color:var(--text);font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    .grid{display:grid;gap:16px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 18px;border-radius:999px;font-weight:600;border:none;cursor:pointer;transition:transform .05s ease,filter .2s ease;}
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:var(--primary);color:#0b0f14}
+    .btn-outline{border:2px solid var(--primary);color:var(--primary);background:transparent}
+    .btn-muted{background:#1a2230;color:var(--text)}
+    header.hero{position:relative;overflow:hidden;border-bottom:1px solid #1c2433}
+    .hero-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
+    .tag{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#132033;border:1px solid #20314a;color:var(--muted);font-size:12px}
+    .title{font-size:44px;line-height:1.1;margin:8px 0 14px}
+    .subtitle{color:var(--muted);font-weight:400}
+    .hero-card{background:linear-gradient(160deg,#121b28,#0f1826);border:1px solid #1f2a3d;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+    .prize{position:relative;border-radius:16px;overflow:hidden;border:1px solid #22314a}
+    .prize img{width:100%;display:block}
+    .badge-prize{position:absolute;top:14px;left:14px;background:linear-gradient(135deg,#ffd76b,#f7c948);color:#231b00;font-weight:700;padding:10px 14px;border-radius:999px;box-shadow:0 8px 18px rgba(247,201,72,.25)}
+    .info-bar{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .info-chip{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:#121a27;border:1px solid #1f2a3d;color:#cfe0ff;font-size:13px}
+    .stripe{height:1px;background:linear-gradient(90deg,transparent,#26344b,transparent);margin:20px 0}
+    .steps{grid-template-columns:repeat(4,1fr)}
+    .step{background:linear-gradient(180deg,#0f1725,#0c1320);border:1px solid #1d2940;border-radius:16px;padding:16px}
+    .step h4{margin:8px 0;font-size:16px}
+    .step p{margin:0;color:var(--muted);font-size:13px}
+    .raffle{grid-template-columns:2fr 1fr}
+    .panel{background:linear-gradient(180deg,#0f1725,#0c1320);border:1px solid #1d2940;border-radius:20px;padding:18px}
+    .panel h3{margin:0 0 10px}
+    .filter{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px}
+    .input{background:#0d1626;border:1px solid #1d2940;border-radius:12px;padding:12px 14px;color:var(--text);outline:none;}
+    .input::placeholder{color:#6c7a92}
+    .badge{font-size:12px;padding:6px 10px;background:#0d1626;border:1px solid #1d2940;border-radius:12px;color:#a9b7cf}
+    .grid-numbers{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;max-height:460px;overflow:auto;padding-right:4px}
+    .num{position:relative;border-radius:12px;padding:12px 8px;text-align:center;background:#0d1626;border:1px solid #1d2940;font-weight:600;cursor:pointer;user-select:none}
+    .num small{display:block;color:#8ea4c4;font-weight:400}
+    .num.selected{outline:2px solid var(--primary);box-shadow:0 0 0 2px rgba(39,208,125,.2) inset}
+    .num.sold{background:#1a2233;border-color:#2a3956;color:#6e7f9d;cursor:not-allowed}
+    .legend{display:flex;gap:12px;align-items:center;color:#9ab3d7;font-size:12px}
+    .legend .dot{width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:6px}
+    .dot-available{background:#0d1626;border:1px solid #1d2940}
+    .dot-selected{background:var(--primary)}
+    .dot-sold{background:#2a3956}
+    .cart-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed #2a3956}
+    .total{display:flex;justify-content:space-between;font-weight:700;padding-top:12px}
+    .mini{font-size:12px;color:#89a2c7}
+    .countdown{font-feature-settings:'tnum' 1, 'lnum' 1}
+    .pix-box{background:#0d1626;border:1px solid #1d2940;border-radius:12px;padding:12px}
+    .notice{font-size:12px;color:#9fb6d6}
+    footer{margin:32px 0 80px;opacity:.9}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+    .foot-card{background:#0f1725;border:1px solid #1d2940;border-radius:16px;padding:16px}
+    .logo{font-weight:800;letter-spacing:.5px}
+    .divider{height:1px;background:#1d2940;margin:12px 0}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,12,.75);z-index:40}
+    .modal-inner{max-width:760px;background:#0f1725;border:1px solid #1d2940;border-radius:20px;padding:18px}
+    .close-x{position:absolute;top:12px;right:16px;cursor:pointer}
+    @media (max-width:1024px){
+      .hero-wrap{grid-template-columns:1fr}
+      .raffle{grid-template-columns:1fr}
+      .grid-numbers{grid-template-columns:repeat(6,1fr)}
+      .steps{grid-template-columns:repeat(2,1fr)}
+      .foot-grid{grid-template-columns:1fr}
+      .title{font-size:34px}
+    }
+  </style>
 </head>
 <body>
-  <h1>🎉 Rifa Premiada — Versão Parruda 🎉</h1>
-  <p>Escolha seus números, pague via Pix e receba no WhatsApp.</p>
-  <p><strong>Este é o protótipo completo com grade de números, carrinho e Pix.</strong></p>
+  <header class="hero">
+    <div class="container hero-wrap">
+      <div>
+        <span class="tag">Transparência • Sorteio pela Loteria Federal</span>
+        <h1 class="title">iPhone 14 Pro Max lacrado — concorra por apenas <span style="color:var(--primary)">R$ <span id="priceHero">0.25</span></span></h1>
+        <p class="subtitle">Escolha seus números em segundos, pague por Pix e receba a confirmação no WhatsApp. Sem app, sem enrolação.</p>
+        <div class="info-bar">
+          <div class="info-chip">Sorteio: <strong id="drawDate" style="margin-left:6px"></strong></div>
+          <div class="info-chip countdown" id="countdown">Carregando…</div>
+          <div class="info-chip">Prêmio: <strong style="margin-left:6px">iPhone 14 Pro Max lacrado</strong></div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:16px">
+          <a href="#comprar" class="btn btn-primary">Quero Participar Agora</a>
+          <button class="btn btn-outline" id="openRegulamento">Ver Regulamento</button>
+        </div>
+        <div class="stripe"></div>
+        <div class="legend">
+          <span><span class="dot dot-available"></span>Disponível</span>
+          <span><span class="dot dot-selected"></span>Selecionado</span>
+          <span><span class="dot dot-sold"></span>Vendido</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="prize">
+          <img src="https://images.unsplash.com/photo-1670272502827-7c9773a73604?q=80&w=1600&auto=format&fit=crop" alt="iPhone 14 Pro Max"/>
+          <div class="badge-prize">Prêmio Principal</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn btn-muted" id="btnVerFotos">Ver fotos reais</button>
+          <a class="btn btn-muted" href="#transparencia">Transparência</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="comprar" style="margin-top:28px">
+    <section class="grid steps">
+      <div class="step">
+        <small class="badge">Passo 1</small>
+        <h4>Escolha seus números</h4>
+        <p>Toque para selecionar. O sistema bloqueia números já vendidos em tempo real.</p>
+      </div>
+      <div class="step">
+        <small class="badge">Passo 2</small>
+        <h4>Identifique-se</h4>
+        <p>Informe nome e WhatsApp para receber o comprovante e seu(s) número(s).</p>
+      </div>
+      <div class="step">
+        <small class="badge">Passo 3</small>
+        <h4>Pague por Pix</h4>
+        <p>Pix Copia e Cola. Confirmação automática simulada neste protótipo.</p>
+      </div>
+      <div class="step">
+        <small class="badge">Passo 4</small>
+        <h4>Transparência na apuração</h4>
+        <p>Sorteio vinculado à Loteria Federal. Resultado e ganhador publicados.</p>
+      </div>
+    </section>
+
+    <div class="stripe"></div>
+
+    <section class="grid raffle">
+      <div class="panel">
+        <h3>Números disponíveis</h3>
+        <div class="filter">
+          <label>
+            <span class="mini">Pesquisar número</span><br>
+            <input id="search" class="input" placeholder="Ex.: 007, 150" />
+          </label>
+          <label>
+            <span class="mini">Preço por número (R$)</span><br>
+            <input id="price" class="input" type="number" min="0.01" step="0.01" value="0.25" />
+          </label>
+          <label>
+            <span class="mini">Qtd máx. por compra</span><br>
+            <input id="limit" class="input" type="number" min="1" value="10" />
+          </label>
+          <span class="badge" id="soldInfo">Vendidos: 0</span>
+          <span class="badge" id="availableInfo">Disponíveis: 0</span>
+        </div>
+        <div class="grid-numbers" id="gridNumbers" aria-live="polite"></div>
+      </div>
+
+      <aside class="panel" aria-label="Carrinho">
+        <h3>Seu carrinho</h3>
+        <div class="mini">Confirme seus dados para reservar os números por 15 minutos.</div>
+        <div class="divider"></div>
+        <label class="mini">Seu nome</label>
+        <input id="buyerName" class="input" placeholder="Ex.: João Silva" />
+        <div style="height:8px"></div>
+        <label class="mini">WhatsApp (com DDD)</label>
+        <input id="buyerPhone" class="input" placeholder="Ex.: 6299999-0000" />
+        <div class="divider"></div>
+
+        <div id="cartList"></div>
+        <div class="total"><span>Total</span><span id="totalValue">R$ 0,00</span></div>
+        <div class="mini" id="feesNote">Inclui taxa de operação: R$ 0,00</div>
+
+        <div class="divider"></div>
+        <label style="display:flex;gap:8px;align-items:center">
+          <input type="checkbox" id="agree" />
+          <span class="mini">Li e concordo com o <a href="#" id="openRegulamentoInline" style="text-decoration:underline">Regulamento</a>.</span>
+        </label>
+        <div style="height:10px"></div>
+        <button class="btn btn-primary" id="btnPagarPix" disabled>Pagar via Pix</button>
+        <div class="notice" style="margin-top:10px">* Integre sua API de pagamentos (Mercado Pago, Asaas, Juno) para produção.</div>
+
+        <div style="height:14px"></div>
+        <div class="pix-box" id="pixBox" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong>Pix Copia e Cola</strong>
+            <button class="btn btn-muted" id="copyPix" style="padding:8px 12px">Copiar</button>
+          </div>
+          <textarea id="pixCode" class="input" style="width:100%;height:88px;margin-top:8px" readonly></textarea>
+          <div class="mini">Chave Pix: <span id="pixKeySpan">034.816.641-92</span></div>
+          <div class="divider"></div>
+          <a id="whatsLink" class="btn btn-outline" target="_blank" rel="noopener">Enviar comprovante pelo WhatsApp</a>
+        </div>
+      </aside>
+    </section>
+
+    <div class="stripe" id="transparencia"></div>
+
+    <section class="grid" style="grid-template-columns:1.2fr .8fr">
+      <div class="panel">
+        <h3>Transparência</h3>
+        <p class="mini">Sorteio pela <strong>Loteria Federal</strong>. A combinação vencedora será definida pelas dezenas dos 5 primeiros prêmios, conforme regulamento. Após a apuração, o relatório completo e o ganhador serão publicados nesta página.</p>
+        <ul class="mini">
+          <li>Data do sorteio: <strong id="drawDate2"></strong></li>
+          <li>Auditoria: publicação do bilhete vencedor + conferência pública</li>
+          <li>Reembolso: pedidos até 7 dias antes do sorteio (ver regulamento)</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Últimos ganhadores</h3>
+        <div class="mini">Exemplo demonstrativo</div>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+          <div class="foot-card"><strong>Jul/2025</strong><div class="mini">#001245 — Maria S.</div></div>
+          <div class="foot-card"><strong>Mai/2025</strong><div class="mini">#009843 — Paulo R.</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div class="foot-grid">
+      <div class="foot-card">
+        <div class="logo">Rifa iPhone 14 Pro Max lacrado</div>
+        <div class="mini">Organização: DANYLLO SOARES • Chave Pix: 034.816.641-92</div>
+        <div class="divider"></div>
+        <div class="mini">Suporte: <a href="https://wa.me/5564981017694" target="_blank" rel="noopener">WhatsApp</a> • Email: atendimento@seudominio.com</div>
+      </div>
+      <div class="foot-card">
+        <strong>Precisa de ajuda?</strong>
+        <div class="mini">Chama no Whats: <a href="https://wa.me/5564981017694?text=Oi%2C%20preciso%20de%20ajuda%20com%20a%20Rifa" target="_blank" rel="noopener">clique aqui</a></div>
+        <div class="mini">Horário: 09h–18h (seg–sex)</div>
+      </div>
+      <div class="foot-card">
+        <strong>Legal</strong>
+        <div class="mini"><a href="#" id="openRegulamentoFooter" style="text-decoration:underline">Regulamento completo</a></div>
+        <div class="mini">Política de Privacidade</div>
+        <div class="mini">Termos de Uso</div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="modalReg">
+    <div class="modal-inner">
+      <div class="close-x" id="closeReg">✕</div>
+      <h3>Regulamento da Rifa</h3>
+      <ol class="mini">
+        <li>Organizador: <strong>DANYLLO SOARES</strong>.</li>
+        <li>Apuração em <strong id="drawDate3"></strong>, vinculada à Loteria Federal.</li>
+        <li>Preço por número: <strong>R$ 0.25</strong>. Limite por compra: <strong>10</strong>.</li>
+        <li>Após o pagamento, o participante recebe seus números por WhatsApp.</li>
+        <li>Reembolsos podem ser solicitados até 7 dias antes da apuração.</li>
+        <li>O ganhador tem 90 dias para retirar o prêmio.</li>
+      </ol>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn-muted" id="closeReg2">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modalFotos">
+    <div class="modal-inner">
+      <div class="close-x" id="closeFotos">✕</div>
+      <h3>Fotos do Prêmio (exemplo)</h3>
+      <div class="grid" style="grid-template-columns:1fr 1fr 1fr">
+        <img style="width:100%;border-radius:12px;border:1px solid #1d2940" src="https://images.unsplash.com/photo-1670272502827-7c9773a73604?q=80&w=1200&auto=format&fit=crop" alt="foto 1"/>
+        <img style="width:100%;border-radius:12px;border:1px solid #1d2940" src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=1200&auto=format&fit=crop" alt="foto 2"/>
+        <img style="width:100%;border-radius:12px;border:1px solid #1d2940" src="https://images.unsplash.com/photo-1603899121575-7ea5d0a3fa3d?q=80&w=1200&auto=format&fit=crop" alt="foto 3"/>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+        <button class="btn btn-muted" id="closeFotos2">Fechar</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Configuração rápida
+    // ======== CONFIG (com seus dados) ========
     const CONFIG = {
-      DRAW_DATETIME: '2025-09-12T19:00:00-03:00',
-      PRICE: 15.00,
+      DRAW_DATETIME: '2025-09-02T19:00:00-03:00',
+      PRICE: 0.25,
       MAX_PER_PURCHASE: 10,
-      PIX_KEY: '000.000.000-00',
-      PIX_RECEIVER: 'SEU NOME / SUA EMPRESA',
-      TOTAL_NUMBERS: 300,
-      SOLD_SAMPLE: ["005","019","020"],
+      PIX_KEY: '034.816.641-92',
+      PIX_RECEIVER: 'DANYLLO SOARES',
+      FEES_PERCENT: 0.00,
+      TOTAL_NUMBERS: 1000,
+      SOLD_SAMPLE: [],
       WHATS_DEFAULT: '5564981017694'
     };
-    console.log("Configuração carregada:", CONFIG);
+
+    // ======== Estado ========
+    let selected = new Set();
+    let sold = new Set(CONFIG.SOLD_SAMPLE);
+
+    // ======== Util ========
+    const pad = (n, size=3)=> String(n).padStart(size,'0');
+    const BRL = (v)=> v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+    // ======== DOM ========
+    const priceInput = document.querySelector('#price');
+    const priceHero = document.querySelector('#priceHero');
+    const limitInput = document.querySelector('#limit');
+    const gridEl = document.querySelector('#gridNumbers');
+    const soldInfo = document.querySelector('#soldInfo');
+    const availableInfo = document.querySelector('#availableInfo');
+    const cartList = document.querySelector('#cartList');
+    const totalValue = document.querySelector('#totalValue');
+    const feesNote = document.querySelector('#feesNote');
+    const agree = document.querySelector('#agree');
+    const btnPix = document.querySelector('#btnPagarPix');
+    const pixBox = document.querySelector('#pixBox');
+    const pixCodeTA = document.querySelector('#pixCode');
+    const copyPixBtn = document.querySelector('#copyPix');
+    const whatsLink = document.querySelector('#whatsLink');
+    const buyerName = document.querySelector('#buyerName');
+    const buyerPhone = document.querySelector('#buyerPhone');
+    const search = document.querySelector('#search');
+    const drawDateEls = [document.querySelector('#drawDate'), document.querySelector('#drawDate2'), document.querySelector('#drawDate3')];
+    const countdownEl = document.querySelector('#countdown');
+    const pixKeySpan = document.querySelector('#pixKeySpan');
+
+    function init(){
+      priceInput.value = CONFIG.PRICE;
+      priceHero.textContent = Number(CONFIG.PRICE).toFixed(2).replace('.',',');
+      limitInput.value = CONFIG.MAX_PER_PURCHASE;
+      const d = new Date(CONFIG.DRAW_DATETIME);
+      const dateFmt = d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+      drawDateEls.forEach(el=> el.textContent = dateFmt.replace(',',' •'));
+      pixKeySpan.textContent = CONFIG.PIX_KEY;
+      renderGrid();
+      updateCart();
+      startCountdown();
+    }
+
+    function renderGrid(filterTerm=''){
+      gridEl.innerHTML = '';
+      const size = String(CONFIG.TOTAL_NUMBERS).length;
+      for(let i=1;i<=CONFIG.TOTAL_NUMBERS;i++){ 
+        const code = pad(i, size);
+        const isSold = sold.has(code);
+        if(filterTerm && !code.includes(filterTerm)) continue;
+        const div = document.createElement('div');
+        div.className = 'num' + (isSold?' sold':'') + (selected.has(code)?' selected':'');
+        div.dataset.code = code;
+        div.innerHTML = `${code}<small>${isSold?'Vendido':'Disponível'}</small>`;
+        if(!isSold){ div.addEventListener('click',()=> toggleSelect(code)); }
+        gridEl.appendChild(div);
+      }
+      soldInfo.textContent = `Vendidos: ${sold.size}`;
+      availableInfo.textContent = `Disponíveis: ${CONFIG.TOTAL_NUMBERS - sold.size}`;
+    }
+
+    function toggleSelect(code){
+      const limit = Number(limitInput.value) || CONFIG.MAX_PER_PURCHASE;
+      if(selected.has(code)) selected.delete(code);
+      else{
+        if(selected.size >= limit){ alert(`Limite de ${limit} número(s) por compra.`); return; }
+        selected.add(code);
+      }
+      updateCart();
+      const el = [...document.querySelectorAll('.num')].find(n=>n.dataset.code===code);
+      if(el) el.classList.toggle('selected');
+    }
+
+    function updateCart(){
+      cartList.innerHTML = '';
+      const price = Number(priceInput.value) || CONFIG.PRICE;
+      const arr = [...selected].sort();
+      arr.forEach(code=>{
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        row.innerHTML = `<span>#${code}</span><strong>${BRL(price)}<\/strong>`;
+        cartList.appendChild(row);
+      })
+      const subtotal = arr.length * price;
+      const fees = subtotal * CONFIG.FEES_PERCENT;
+      totalValue.textContent = BRL(subtotal + fees);
+      feesNote.textContent = `Inclui taxa de operação: ${BRL(fees)}`;
+      btnPix.disabled = !(arr.length && agree.checked && buyerName.value.trim() && buyerPhone.value.trim());
+    }
+
+    function startCountdown(){
+      function tick(){
+        const now = new Date();
+        const end = new Date(CONFIG.DRAW_DATETIME);
+        let diff = Math.max(0, end - now);
+        const d = Math.floor(diff/86400000); diff-=d*86400000;
+        const h = Math.floor(diff/3600000); diff-=h*3600000;
+        const m = Math.floor(diff/60000); diff-=m*60000;
+        const s = Math.floor(diff/1000);
+        countdownEl.textContent = `${d}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      }
+      tick();
+      setInterval(tick,1000);
+    }
+
+    function buildPixCode(total, name, phone, numbers){
+      const ref = `REF${Date.now()}`;
+      const meta = { recebedor: CONFIG.PIX_RECEIVER, chave: CONFIG.PIX_KEY, pagador: name, fone: phone, numeros: numbers };
+      return `PIX DEMO | ${CONFIG.PIX_RECEIVER} | CHAVE ${CONFIG.PIX_KEY} | TOTAL ${total} | REF ${ref} | NUMEROS ${numbers.join(',')}` + "\n" + JSON.stringify(meta);
+    }
+
+    priceInput.addEventListener('input', ()=>{ priceHero.textContent = Number(priceInput.value||CONFIG.PRICE).toFixed(2).replace('.',','); updateCart(); });
+    limitInput.addEventListener('input', updateCart);
+    agree.addEventListener('change', updateCart);
+    buyerName.addEventListener('input', updateCart);
+    buyerPhone.addEventListener('input', updateCart);
+    search.addEventListener('input', (e)=> renderGrid(e.target.value.trim()));
+
+    document.querySelector('#openRegulamento').addEventListener('click', ()=> modal('modalReg',true));
+    document.querySelector('#openRegulamentoInline').addEventListener('click', (e)=>{ e.preventDefault(); modal('modalReg',true); });
+    document.querySelector('#openRegulamentoFooter').addEventListener('click', (e)=>{ e.preventDefault(); modal('modalReg',true); });
+    document.querySelector('#closeReg').addEventListener('click', ()=> modal('modalReg',false));
+    document.querySelector('#closeReg2').addEventListener('click', ()=> modal('modalReg',false));
+
+    document.querySelector('#btnVerFotos').addEventListener('click', ()=> modal('modalFotos',true));
+    document.querySelector('#closeFotos').addEventListener('click', ()=> modal('modalFotos',false));
+    document.querySelector('#closeFotos2').addEventListener('click', ()=> modal('modalFotos',false));
+
+    copyPixBtn.addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(pixCodeTA.value); copyPixBtn.textContent='Copiado!'; setTimeout(()=> copyPixBtn.textContent='Copiar', 1400);}catch(err){ alert('Não foi possível copiar.'); }
+    });
+
+    btnPix.addEventListener('click', ()=>{
+      const arr = [...selected].sort();
+      const price = Number(priceInput.value) || CONFIG.PRICE;
+      const subtotal = arr.length * price;
+      const fees = subtotal * CONFIG.FEES_PERCENT;
+      const total = BRL(subtotal + fees);
+      const name = buyerName.value.trim();
+      const phone = buyerPhone.value.trim();
+      const payload = buildPixCode(total, name, phone, arr);
+      pixCodeTA.value = payload;
+      pixBox.style.display = 'block';
+      const msg = encodeURIComponent(`Olá! Seguem meus dados e comprovante da Rifa.%0A%0ANome: ${name}%0AWhatsApp: ${phone}%0ANúmeros: ${arr.join(', ')}%0ATotal: ${total}%0A%0AEnviei o Pix Copia e Cola acima.`);
+      whatsLink.href = `https://wa.me/${CONFIG.WHATS_DEFAULT}?text=${msg}`;
+      whatsLink.textContent = 'Enviar comprovante pelo WhatsApp';
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    function modal(id,show){ document.getElementById(id).style.display = show?'flex':'none'; }
+
+    init();
   </script>
 </body>
 </html>
